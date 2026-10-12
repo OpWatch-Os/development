@@ -1,11 +1,12 @@
 # Repository index
 
 Recorded organization layout: **27 repositories**, comprising **21 native
-GitHub forks**, **two selected upstream Git mirrors** and **four original
-project repositories**. The native forks are the two OnePlus sources and
-nineteen Android platform components. Connectivity and Google msm-extra are
-Git mirrors, preserving the selected upstream history without a native GitHub
-fork relationship.
+GitHub forks**, **one selected upstream Git mirror**, **one complete source
+snapshot** and **four original project repositories**. The native forks are
+the two OnePlus sources and nineteen Android platform components. Google
+msm-extra is a selected Git mirror. Connectivity preserves the complete
+canonical source tree in a new import commit, without Google commit history
+on GitHub.
 
 This index describes source organization for OPWE242 development. No complete
 ROM, successful Linux source sync, compilation, hardware boot or installation
@@ -31,9 +32,10 @@ Android 15 does not establish a complete Android 15 or Wear OS system.
 
 Every selected platform repository has an editable **`opwatchos-17.0`** branch.
 The table records its canonical Google **Android 17 r1 baseline commit**. The
-branch may evolve during development; these hashes identify the initial source
-baseline and the selected pinned overlay, not a promise that mutable branch
-heads remain unchanged.
+branch may evolve during development; these hashes identify the canonical
+source baseline, not a promise that mutable branch heads remain unchanged.
+The pinned overlay uses the canonical commit for nineteen components and the
+separate, tree-identical source import commit for Connectivity.
 
 GitHub native fork parents can be public mirrors such as `aosp-mirror` or
 `aosp-mirror-neo`. Those parent repositories are not presented as official
@@ -55,12 +57,23 @@ Google repositories; the canonical source is linked in each row.
 | [android_platform_hardware_libhardware](https://github.com/OpWatch-Os/android_platform_hardware_libhardware) | `hardware/libhardware` | Native GitHub fork | [`97ee3e33ec5ba48c0eca8341ed377ac4497a0678`](https://android.googlesource.com/platform/hardware/libhardware/+/97ee3e33ec5ba48c0eca8341ed377ac4497a0678) |
 | [android_platform_packages_apps_Settings](https://github.com/OpWatch-Os/android_platform_packages_apps_Settings) | `packages/apps/Settings` | Native GitHub fork | [`213829fb67f5e070029e0513a088f31bc8f5c1ed`](https://android.googlesource.com/platform/packages/apps/Settings/+/213829fb67f5e070029e0513a088f31bc8f5c1ed) |
 | [android_platform_packages_modules_Permission](https://github.com/OpWatch-Os/android_platform_packages_modules_Permission) | `packages/modules/Permission` | Native GitHub fork | [`1093eca7407576c72e51b1a88550ee0667a6e5dc`](https://android.googlesource.com/platform/packages/modules/Permission/+/1093eca7407576c72e51b1a88550ee0667a6e5dc) |
-| [android_platform_packages_modules_Connectivity](https://github.com/OpWatch-Os/android_platform_packages_modules_Connectivity) | `packages/modules/Connectivity` | Selected Git mirror | [`347fbd34b368d19f0d87e908ea101eed3601a731`](https://android.googlesource.com/platform/packages/modules/Connectivity/+/347fbd34b368d19f0d87e908ea101eed3601a731) |
+| [android_platform_packages_modules_Connectivity](https://github.com/OpWatch-Os/android_platform_packages_modules_Connectivity) | `packages/modules/Connectivity` | Complete source snapshot | [`347fbd34b368d19f0d87e908ea101eed3601a731`](https://android.googlesource.com/platform/packages/modules/Connectivity/+/347fbd34b368d19f0d87e908ea101eed3601a731) |
 | [android_platform_packages_modules_Bluetooth](https://github.com/OpWatch-Os/android_platform_packages_modules_Bluetooth) | `packages/modules/Bluetooth` | Native GitHub fork | [`c77db469de80f86660bc053bec4dee0c5d4b947c`](https://android.googlesource.com/platform/packages/modules/Bluetooth/+/c77db469de80f86660bc053bec4dee0c5d4b947c) |
 | [android_platform_system_libhidl](https://github.com/OpWatch-Os/android_platform_system_libhidl) | `system/libhidl` | Native GitHub fork | [`061055fc4dad78e5d25a77d9217001794656f16b`](https://android.googlesource.com/platform/system/libhidl/+/061055fc4dad78e5d25a77d9217001794656f16b) |
 | [android_platform_system_hwservicemanager](https://github.com/OpWatch-Os/android_platform_system_hwservicemanager) | `system/hwservicemanager` | Native GitHub fork | [`60271965cf6b055ed82b2e1ae0bf74b2c34a6af2`](https://android.googlesource.com/platform/system/hwservicemanager/+/60271965cf6b055ed82b2e1ae0bf74b2c34a6af2) |
 | [android_platform_build_blueprint](https://github.com/OpWatch-Os/android_platform_build_blueprint) | `build/blueprint` | Native GitHub fork | [`7f2058de8155b05ea3c3f8317d33bfe732cacf8b`](https://android.googlesource.com/platform/build/blueprint/+/7f2058de8155b05ea3c3f8317d33bfe732cacf8b) |
 | [android_platform_system_tools_mkbootimg](https://github.com/OpWatch-Os/android_platform_system_tools_mkbootimg) | `system/tools/mkbootimg` | Native GitHub fork | [`4a27dd13adf9846e12d585d6fe99a375ebb58396`](https://android.googlesource.com/platform/system/tools/mkbootimg/+/4a27dd13adf9846e12d585d6fe99a375ebb58396) |
+
+Connectivity's organization import commit is
+[`f5311234fcf561df1c20d468a5072c103cc55ba0`](https://github.com/OpWatch-Os/android_platform_packages_modules_Connectivity/commit/f5311234fcf561df1c20d468a5072c103cc55ba0).
+Its tree is **`3a9df5486bd2b0d48cf22a4df8b8e097d36da07d`**, identical to
+the canonical Google commit above: all **3,017 files**, modes, licenses and
+notices are retained. This is a full selected source snapshot, not a source
+subset. Google commit history is not preserved on GitHub because historical
+JSON blobs larger than GitHub's 100 MB file limit prevented that history from
+being published. History remains available from the canonical upstream; the
+project also retains it locally. The pinned overlay uses the import commit,
+so it does not request a canonical commit absent from the snapshot repository.
 
 ## Source workspace manifests
 
@@ -89,7 +102,8 @@ repo sync -c -j4
 ```
 
 Choose one overlay when initializing a workspace. `opwatch-pinned.xml` fixes
-the twenty platform components and the two device/vendor scaffolds, while
+the twenty platform components (nineteen canonical commits and Connectivity's
+source import commit) and the two device/vendor scaffolds, while
 other AOSP projects retain the release tag. A fully resolved immutable checkout must
 be exported after a successful sync with `repo manifest -r`, alongside a lock
 of external toolchains and build inputs. The manifests do not define a complete

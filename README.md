@@ -19,12 +19,16 @@ The immediate work is to obtain matching A.165 stock inputs, establish a recover
 
 ## Repositories
 
-The organization contains **27 repositories: 21 native GitHub forks, two
-selected upstream Git mirrors and four original project repositories**. The
+The organization contains **27 repositories: 21 native GitHub forks, one
+selected upstream Git mirror, one complete source snapshot and four original
+project repositories**. The
 [complete repository index](docs/REPOSITORIES.md) lists each purpose, branch,
 source revision and canonical upstream. Twenty Android platform components
 have editable `opwatchos-17.0` branches based on the recorded Google Android
-17 r1 commits; the rest of AOSP is acquired from upstream through the manifest.
+17 r1 source; the rest of AOSP is acquired from upstream through the manifest.
+Nineteen platform repositories preserve the canonical baseline commits.
+Connectivity is a complete source snapshot with an identical canonical tree
+and a separate import commit; its Google history remains available upstream.
 
 | Repository | Purpose |
 | --- | --- |
@@ -59,7 +63,8 @@ instead of `opwatch.xml` in the initialization command:
 repo init -u https://github.com/OpWatch-Os/manifests -b main -m opwatch-pinned.xml
 ```
 
-The pinned overlay locks the twenty selected platform components and both
+The pinned overlay locks the twenty selected platform components (nineteen
+canonical commits and the Connectivity snapshot import commit) and both
 device/vendor scaffolds to recorded commits. Other AOSP projects retain the
 official release tag; this is not an immutable lock of every build input. The default groups
 omit three `notdefault` AOSP projects; use `-g all` with `repo init` to acquire
