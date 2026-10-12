@@ -27,6 +27,42 @@ These are hashes of the acquired archive bytes, not a promise that a future arch
 
 The emulator package is an analysis reference, not a hardware port or a grant to redistribute Google components. It is not bundled in this repository. A complete Wear product build remains an unresolved input.
 
+## Organization source repositories and Android manifests
+
+The [repository index](REPOSITORIES.md) records all **27 OpWatch-Os
+repositories: 21 native GitHub forks, two selected Git mirrors and four
+original project repositories**. The native forks comprise the two official
+OnePlus sources and nineteen selected Android platform components. Connectivity
+and Google kernel/msm-extra are Git mirrors of selected upstream history; they
+are not described as native GitHub forks.
+
+The twenty platform component baselines come from the canonical Google
+`android-17.0.0_r1` revisions listed in the index. Their editable branches are
+`opwatchos-17.0`. A GitHub fork can have a public mirror as its parent: that
+GitHub parent is not described as the official Google source. The canonical
+source URL and recorded commit establish the baseline independently of the
+GitHub fork relationship. Future branch edits must retain their own provenance.
+
+The manifest source revision remains
+`5bc9a7ce1cd78dd53613bbfd0ebf506e1e4adb0f`. Its 1,087 AOSP projects are preserved
+by `aosp.xml`; `opwatch.xml` substitutes twenty platform projects and adds the
+device/vendor scaffolds for a total of 1,089 projects. Project paths, groups
+and copy/link directives are retained by the substitutions.
+
+`opwatch-pinned.xml` fixes the selected twenty component baselines to the
+recorded commit hashes and uses `local-pinned-manifest.xml` to pin both
+device/vendor scaffolds. It does not pin every project to an independently
+resolved commit: remaining AOSP projects use the official release tag. An immutable complete snapshot requires a
+successful sync, a resolved `repo manifest -r` and a lock of external build
+inputs. Source manifest validation is not a claim that Linux sync, compilation
+or a device boot has succeeded.
+
+The kernel workspace is acquired separately with `kernel.xml`. The optional
+Google SW5100 Android 15 QPR2 msm-extra mirror fixes
+`a4327f95421b0070c11fe9c70d0fd05466bf642c` and contains chiefly Qualcomm audio
+modules; it does not replace the complete OnePlus kernel or establish A.165
+compatibility. Its history and notices remain upstream material.
+
 ## Device observations and stock OTA
 
 The device baseline comes from stock OPWE242 A.165 properties, the running kernel configuration, and software files readable during local acquisition. It is summarized in [STATUS.md](STATUS.md). Full private acquisition logs, device identifiers, network captures, and account information are excluded.
